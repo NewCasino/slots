@@ -111,7 +111,6 @@ function CMain(oData){
         s_oSpriteLibrary.addSprite("plus_bg","./sprites/but_plus_bg.png");
         s_oSpriteLibrary.addSprite("minus_bg","./sprites/but_minus_bg.png");
         s_oSpriteLibrary.addSprite("info_but","./sprites/but_info_bg.png");
-        s_oSpriteLibrary.addSprite("win_frame_anim","./sprites/win_frame_anim.png");
         s_oSpriteLibrary.addSprite("but_maxbet_bg","./sprites/but_maxbet_bg.png");
         s_oSpriteLibrary.addSprite("audio_icon","./sprites/audio_icon.png");
         s_oSpriteLibrary.addSprite("msg_box","./sprites/msg_box.png");

@@ -149,8 +149,8 @@ function CBonusPanel(){
     this.wheelArrived = function(){	
         _oTextHighLight.text = TEXT_CURRENCY + WHEEL_SETTINGS[_iPrizeToShow];
         
-	this._animWinText();
-        
+    	this._animWinText();
+            
         if(WHEEL_SETTINGS[_iPrizeToShow].prize <= 0){
             _iGameState = STATE_BONUS_LOSE;
 
@@ -181,7 +181,7 @@ function CBonusPanel(){
     };
     
     this.update = function(){
-	if(_bInitGame){
+    	if(_bInitGame){
             _oLeds.update();
             switch(_iGameState) {
                 case STATE_BONUS_IDLE:{
@@ -201,7 +201,7 @@ function CBonusPanel(){
 
             }
         }
-        
+    
     };
     
     s_oBonusPanel = this;
