@@ -5,7 +5,8 @@ function CWheelBonus(iX, iY,oParentContainer){
     var _aPrize;
     
     var _oWheel;
-    var _oWheelContainer;
+    var _oBg;
+    var _oTextContainer;
     var _oSpinSound;
     var _oParentContainer;
     
@@ -21,68 +22,37 @@ function CWheelBonus(iX, iY,oParentContainer){
 
         this._initColors();
         
-        var oSprite = s_oSpriteLibrary.getSprite('wheel');
-        
-        _oWheelContainer = new createjs.Container();
-        _oWheelContainer.x = iX;
-        _oWheelContainer.y = iY;
-        _oParentContainer.addChild(_oWheelContainer);
-     
+        var oSprite = s_oSpriteLibrary.getSprite('bg_bonus');
+
+        _oBg = new createjs.Container();
+        _oBg.x = iX;
+        _oBg.y = iY;
+        _oParentContainer.addChild(_oBg);
+
+        _oTextContainer = new createjs.Container();
+        _oTextContainer.x = iX;
+        _oTextContainer.y = iY;
+        _oParentContainer.addChild(_oTextContainer);
+
         _oWheel = createBitmap(oSprite);
-        _oWheel.regX = oSprite.width/2;
-        _oWheel.regY = oSprite.height/2;
-        _oWheelContainer.addChild(_oWheel);
+        _oWheel.regX = 690;
+        _oWheel.regY = 320;
+
+        _oBg.addChild(_oWheel);
 
         this.setText(1);
 
     };
  
     this.unload = function(){
-        _oParentContainer.removeChild(_oWheelContainer); 
+        _oParentContainer.removeChild(_oBg); 
+        _oParentContainer.removeChild(_oTextContainer);
     };
     
     this._initColors = function(){
-        for(var i=0; i<9; i++){
-            _aColors[0] = "violet";
-        }    
-        for(var i=351; i<=360; i++){
-            _aColors[i] = "violet";
-        }
-        
-        for (var j=0; j<4; j++){
-            for(var i=9+j*SEGMENT_ROT*5; i<27+j*SEGMENT_ROT*5; i++){
-                _aColors[i] = "blue";
-            }
-        }
-        
-        for (var j=0; j<4; j++){
-            for(var i=27+j*SEGMENT_ROT*5; i<45+j*SEGMENT_ROT*5; i++){
-                _aColors[i] = "green";
-            }
-        }
-        
-        for (var j=0; j<4; j++){
-            for(var i=45+j*SEGMENT_ROT*5; i<63+j*SEGMENT_ROT*5; i++){
-                _aColors[i] = "yellow";
-            }
-        }
-        
-        for (var j=0; j<4; j++){
-            for(var i=63+j*SEGMENT_ROT*5; i<81+j*SEGMENT_ROT*5; i++){
-                _aColors[i] = "red";
-            }
-        }
-        
-        for (var j=0; j<3; j++){
-            for(var i=81+j*SEGMENT_ROT*5; i<=99+j*SEGMENT_ROT*5; i++){
-                _aColors[i] = "violet";
-            }
-        }
-        
-        for(var i=315; i<=333; i++){
+        for(var i=0; i<=360; i++){
             _aColors[i] = "white";
         }
-        
     };
     
     this.setText = function(iMultiply){
@@ -93,7 +63,7 @@ function CWheelBonus(iX, iY,oParentContainer){
         
         for(var i=0; i<_aPrize.length; i++ ){ 
             
-            _aText[i] = new CFormatText(vVect.getX(), vVect.getY(), TEXT_CURRENCY + _aPrize[i]*iMultiply, _oWheelContainer);
+            _aText[i] = new CFormatText(vVect.getX(), vVect.getY(), TEXT_CURRENCY + _aPrize[i]*iMultiply, _oTextContainer);
             _aText[i].rotateText(-iLocalRot*i);
             
             rotateVector2D(iRotation,vVect);           
@@ -114,16 +84,16 @@ function CWheelBonus(iX, iY,oParentContainer){
            _oSpinSound = playSound("reel_bonus",1,-1);
         }
 		
-        createjs.Tween.get(_oWheelContainer).to({rotation:_oWheelContainer.rotation + iValue}, WHEEL_SPIN_TIMESPEED*iTimeMult, createjs.Ease.quartOut)//cubicOut
-                .call(function(){_oWheelContainer.rotation %= 360; s_oBonusPanel.wheelArrived(); if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){_oSpinSound.stop();}});
+        createjs.Tween.get(_oTextContainer).to({rotation:_oTextContainer.rotation + iValue}, WHEEL_SPIN_TIMESPEED*iTimeMult, createjs.Ease.quartOut)//cubicOut
+                .call(function(){_oTextContainer.rotation %= 360; s_oBonusPanel.wheelArrived(); if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){_oSpinSound.stop();}});
     };
     
     this.getDegree = function(){
-        return _oWheelContainer.rotation;
+        return _oTextContainer.rotation;
     };
     
     this.getColor = function(){
-        var iDeg = Math.round(_oWheelContainer.rotation);
+        var iDeg = Math.round(_oTextContainer.rotation);
         return _aColors[iDeg];
     };
     

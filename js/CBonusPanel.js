@@ -7,6 +7,7 @@ function CBonusPanel(){
     var _iPrizeToShow;
     var _iCurAlpha;
     var _oWheel;
+    var _oSpinArrow;
     var _oLeds;
     var _oSpinBut;
     var _oTextHighLight;
@@ -23,37 +24,24 @@ function CBonusPanel(){
         _oContainer.visible = false;
         s_oAttachSection.addChild(_oContainer);
         
-        var pCenterWheel = {x: 890, y: 320};
+        var pCenterWheel = {x: 690, y: 320};
         _oWheel = new CWheelBonus(pCenterWheel.x, pCenterWheel.y,_oContainer);
         
-        var oBg = createBitmap(s_oSpriteLibrary.getSprite('bg_bonus'));
-        _oContainer.addChild(oBg);
+        var oSprite = s_oSpriteLibrary.getSprite('wheel');
+        _oSpinArrow = createBitmap(oSprite);
+        _oSpinArrow.regX = -440;
+        _oSpinArrow.regY = -70;
+        _oContainer.addChild(_oSpinArrow);
         
         _oLeds = new CLedsBonus(pCenterWheel.x, pCenterWheel.y,_oContainer);
         _iCurAnim = _oLeds.getState();
         
         var oSprite = s_oSpriteLibrary.getSprite('but_spin_bonus');
-        _oSpinBut = new CTextButton(360 + (oSprite.width/2),490 ,oSprite,TEXT,FONT_GAME,"#ffffff",40,_oContainer);  
+        _oSpinBut = new CTextButton(130 + (oSprite.width/2),490 ,oSprite,TEXT_SPIN,FONT_GAME,"#ffffff",40,_oContainer);  
         _oSpinBut.addEventListener(ON_MOUSE_UP, this._onSpin, this);
         
-        var oTextHelpStroke = new createjs.Text(TEXT_BONUS_HELP,"bold 56px "+FONT_GAME, "#000");
-        oTextHelpStroke.x = 490;
-        oTextHelpStroke.y = 132;
-        oTextHelpStroke.textAlign = "center";
-        oTextHelpStroke.textBaseline = "alphabetic";
-        oTextHelpStroke.lineWidth = 300;
-        _oContainer.addChild(oTextHelpStroke);
-        
-        var oTextHelp = new createjs.Text(TEXT_BONUS_HELP,"bold 56px "+FONT_GAME, "white");
-        oTextHelp.x = 488;
-        oTextHelp.y = 130;
-        oTextHelp.textAlign = "center";
-        oTextHelp.textBaseline = "alphabetic";
-        oTextHelp.lineWidth = 300;
-        _oContainer.addChild(oTextHelp);
-        
         _oTextHighLight = new createjs.Text(TEXT_CURRENCY +"0","bold 56px "+FONT_GAME, "yellow");
-        _oTextHighLight.x = 464;
+        _oTextHighLight.x = 240;
         _oTextHighLight.y = 340;
         _oTextHighLight.textAlign = "center";
         _oTextHighLight.textBaseline = "alphabetic";
@@ -82,7 +70,7 @@ function CBonusPanel(){
         var iOffsetSpin = -iOffsetInterval/2 + Math.random()*iOffsetInterval;
         var _iCurWheelDegree = _oWheel.getDegree();
         
-        var iTrueRotation = (360 - _iCurWheelDegree + _iPrizeToShow * SEGMENT_ROT + iOffsetSpin)%360; //Define how much rotation, to reach the selected prize.       
+        var iTrueRotation = (360 + 90 - _iCurWheelDegree + _iPrizeToShow * SEGMENT_ROT + iOffsetSpin)%360; //Define how much rotation, to reach the selected prize.       
         
         var iRotValue = 360*iNumSpinFake + iTrueRotation;
         var iTimeMult = iNumSpinFake;
