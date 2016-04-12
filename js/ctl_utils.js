@@ -329,8 +329,7 @@ function getUrlVars( urlVars ) {
 
 function tryCheckLogin(){
     var oData = checkLogin();
-    
-    console.log(oData);
+
     var oRetData = getUrlVars(oData);
     
     if ( oRetData.res === "true" ){
@@ -351,8 +350,7 @@ function tryCheckLogin(){
 
 function tryCallSpin(iCoin,iTotBet,iLastLineActive){
     var oData = callSpin(iLastLineActive,iCoin,iTotBet);
-    
-    console.log(oData);
+
     var oRetData = getUrlVars(oData);
     if ( oRetData.res === "true" ){
         s_oGame.onSpinReceived(oRetData);

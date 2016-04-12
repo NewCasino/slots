@@ -692,6 +692,14 @@ function CGame(oData){
     this.onSpinReceived = function(oRetData){
         _iMoney -= _iTotBet;
         _oInterface.refreshMoney(_iMoney);
+
+        var game = [];
+        game.push('exyJkJxvZvNGWd2goDAWJv');
+        betable.wallet(game, function(data){
+            console.log(data);
+        }, function(data){
+            alert("Error: " +data.description);
+        });
         
         _iCurState = GAME_STATE_SPINNING;
         

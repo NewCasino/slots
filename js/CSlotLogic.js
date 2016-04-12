@@ -72,8 +72,8 @@ function _onCallSpin(iCoin, iCurBet, iNumBettingLines){
         return;
     }
     //DECREASING USER MONEY WITH THE CURRENT BET
-    s_aSession["iMoney"] = s_aSession["iMoney"] - iCurBet;
-    s_aSession["iSlotCash"] = s_aSession["iSlotCash"] + iCurBet;
+    s_aSession["iMoney"] = s_aSession["iMoney"] - parseFloat(iCurBet);
+    s_aSession["iSlotCash"] = s_aSession["iSlotCash"] + parseFloat(iCurBet);
     s_aSession["bBonus"] = 0;
 
     var bFreespin = 0;
@@ -86,12 +86,7 @@ function _onCallSpin(iCoin, iCurBet, iNumBettingLines){
     }
     var wage = iCurBet.toFixed(2).toString();
     var economy = betable.demoMode ? 'sandbox' : 'real';
-    betable.wallet([], function(data){
-        console.log("Pre:");
-        console.log(data);
-    }, function(data){
-        alert("Error: " +data.description);
-    });
+
     //Make a betable bet on the game
     betable.bet("Q64CcNdTxMqJsF6EApIbKn", {
         wager: wage
@@ -99,10 +94,10 @@ function _onCallSpin(iCoin, iCurBet, iNumBettingLines){
         ,currency: 'GBP'
         ,economy: economy
     }, function success(data){
-        console.log(data);
         var slotWindow = data.window;
         var slotOutcome = data.outcomes;
         var slotPayouts = data.payout;
+        console.log(data);
 
         //Determine symbols to display in final results
         for (var i = 0; i < slotWindow.length; i++) {
@@ -136,12 +131,12 @@ function _onCallSpin(iCoin, iCurBet, iNumBettingLines){
                 var symbols = new Array();
                 symbols = outcomeObject.symbols;
                 for(var k = 0; k < payline.length; k++){
-                    bBonus++;
-                    if (bBonus == 3) {
-                        bBonus = 0;
-                        s_aSession["bBonus"] = 1;
-                    }
                     if(symbols[k] == "bonus"){
+                        bBonus++;
+                        if (bBonus == 3) {
+                            bBonus = 0;
+                            s_aSession["bBonus"] = 1;
+                        }
                         aCellList.push({row:payline[k],col:k,value:"9"});
                     }
                     else if(symbols[k] == "scatter"){
@@ -165,7 +160,7 @@ function _onCallSpin(iCoin, iCurBet, iNumBettingLines){
         };
 
         var iPrizeReceived = -1;
-
+        //Bonus spin
         if (s_aSession["bBonus"] == 1) {
             var aPrizeLength = new Array();
             for (var i = 0; i < s_aSession["bonus_prize_occur"].length; i++) {
@@ -176,30 +171,33 @@ function _onCallSpin(iCoin, iCurBet, iNumBettingLines){
                 var iRandIndex = Math.floor(Math.random()*(aPrizeLength.length));
                 var iPrizeReceived = aPrizeLength[iRandIndex];
             }
-        }
-
-        if(iPrizeReceived !== -1){
-            s_aSession["iMoney"] = s_aSession["iMoney"] + s_aSession["bonus_prize"][iPrizeReceived];
-            s_aSession["iSlotCash"] = s_aSession["iSlotCash"] - s_aSession["bonus_prize"][iPrizeReceived];
+            wage = s_aSession["bonus_prize"][iPrizeReceived].toFixed(2).toString();
+            console.log(wage);
+            betable.betCredits("Q64CcNdTxMqJsF6EApIbKn", "exyJkJxvZvNGWd2goDAWJv", {
+                wager: wage
+                ,currency: 'GBP'
+                ,economy: economy
+            }, function success(data){
+                console.log(data);
+            }, function error(data){
+                alert("The following error has occured while making a bet: " +data.description);
+            });
+            if(iPrizeReceived !== -1){
+                s_aSession["iSlotCash"] = s_aSession["iSlotCash"] - parseFloat(s_aSession["bonus_prize"][iPrizeReceived]);
+            }
         }
 
         var oData;
         //Win outcome
         if (outcome) {
-            s_aSession["iMoney"] = s_aSession["iMoney"] + parseInt(slotPayouts); 
-            s_aSession["iSlotCash"] = s_aSession["iSlotCash"] - parseInt(slotPayouts);
+            s_aSession["iMoney"] = s_aSession["iMoney"] + parseFloat(slotPayouts); 
+            s_aSession["iSlotCash"] = s_aSession["iSlotCash"] - parseFloat(slotPayouts);
             oData = "res=true&win=true&pattern="+JSON.stringify(_aFinalSymbols)+"&win_lines="+JSON.stringify(_aWinningLine)+"&money="+s_aSession["iMoney"]+"&tot_win="+slotPayouts+"&freespin="+s_aSession["iTotFreeSpin"]+"&bonus="+s_aSession["bBonus"]+"&bonus_prize="+iPrizeReceived+"&cash="+s_aSession["iSlotCash"];
         }
         //Lose outcome
         else{
             oData = "res=true&win=false&pattern="+JSON.stringify(_aFinalSymbols)+"&money="+s_aSession["iMoney"]+"&freespin="+s_aSession["iTotFreeSpin"]+"&bonus="+s_aSession["bBonus"]+"&bonus_prize="+iPrizeReceived+"&cash="+s_aSession["iSlotCash"];
         }
-        betable.wallet([], function(data){
-            console.log("Post:");
-            console.log(data);
-        }, function(data){
-            alert("Error: " +data.description);
-        });
         //Display outcome in the game
         var oRetData = getUrlVars(oData);
         if ( oRetData.res === "true" ){

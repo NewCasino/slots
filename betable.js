@@ -74,16 +74,16 @@ window.Betable = function Betable(clientID, search_options) {
         }
         this._demoWallet = {
             real: {
-                balance: search.init_balance || '10000.00'
+                balance: search.init_balance || '1000.00'
               , currency: 'GBP'
               , economy: 'real'
-              , credits: {}
+              , credits: {'exyJkJxvZvNGWd2goDAWJv' : '1000.00'}
             },
             sandbox: {
-                balance: search.init_balance || '10000.00'
+                balance: search.init_balance || '1000.00'
               , currency: 'GBP'
               , economy: 'sandbox'
-              , credits: {}
+              , credits: {'exyJkJxvZvNGWd2goDAWJv' : '1000.00'}
             }
         }
         this.manifest = search.manifest
@@ -264,7 +264,7 @@ window.Betable = function Betable(clientID, search_options) {
             delete data.currency
 
             var self = this
-            this.unbackedCreditBet(gameID, creditGameID, data, function(betData) {
+            this.unbackedBetCredits(gameID, creditGameID, data, function(betData) {
                 _settleDemoWallet.call(self, wager, betData, economy, creditGameID)
                 callback(betData)
             }, errback)
@@ -284,7 +284,7 @@ window.Betable = function Betable(clientID, search_options) {
         )
     }
 
-    this.unbackedBetCredits = function Betable_unbackedBetCredits(gameID, creditGameID, options, callback, errback) {
+    this.unbackedBetCredits = function Betable_unbackedBetCredits(gameID, creditGameID, data, callback, errback) {
         this.heartbeat()
         this.unbackedBet(gameID +'/'+ creditGameID, data, callback, errback)
     }
