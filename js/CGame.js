@@ -271,10 +271,6 @@ function CGame(oData){
         if(_aWinningLine.length > 0){
             //HIGHLIGHT WIN COMBOS IN PAYTABLE
             for(var i=0;i<_aWinningLine.length;i++){
-                
-                if(_aWinningLine[i].line > 0){
-                    _oInterface.showLine(_aWinningLine[i].line);
-                }
                 var aList = _aWinningLine[i].list;
                 for(var k=0;k<aList.length;k++){
                     _aStaticSymbols[aList[k].row][aList[k].col].show(aList[k].value);
@@ -282,8 +278,6 @@ function CGame(oData){
                     _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,false);
                 }
             }
-          
-
             if(_iTotFreeSpin > 0){
                 _oLogo.visible = false;
                 _oLogoFreeSpin.visible = true;
@@ -364,24 +358,17 @@ function CGame(oData){
     };
     
     this._showWin = function(){
-        var iLineIndex;
         if(_iCurWinShown>0){ 
             if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
                 _oCurSymbolWinSound.stop();
             }
             
-            iLineIndex = _aWinningLine[_iCurWinShown-1].line;
-            if(iLineIndex > 0){
-                _oInterface.hideLine(iLineIndex);
-            }
-            
-            
-            var aList = _aWinningLine[_iCurWinShown-1].list;
-            for(var k=0;k<aList.length;k++){
-                _aStaticSymbols[aList[k].row][aList[k].col].stopAnim();
-                _aMovingColumns[aList[k].col].setVisible(aList[k].row,true);
-                _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,true);
-            }
+            // var aList = _aWinningLine[_iCurWinShown-1].list;
+            // for(var k=0;k<aList.length;k++){
+            //     _aStaticSymbols[aList[k].row][aList[k].col].stopAnim();
+            //     _aMovingColumns[aList[k].col].setVisible(aList[k].row,true);
+            //     _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,true);
+            // }
         }
         
         if(_iCurWinShown === _aWinningLine.length){
@@ -399,19 +386,13 @@ function CGame(oData){
                 return;
             }
         }
-        
-        iLineIndex = _aWinningLine[_iCurWinShown].line;
-        if(iLineIndex > 0){
-            _oInterface.showLine(iLineIndex);
-        }
-        
 
-        var aList = _aWinningLine[_iCurWinShown].list;
-        for(var k=0;k<aList.length;k++){
-            _aStaticSymbols[aList[k].row][aList[k].col].show(aList[k].value);
-            _aMovingColumns[aList[k].col].setVisible(aList[k].row,false);
-            _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,false);
-        }
+        // var aList = _aWinningLine[_iCurWinShown].list;
+        // for(var k=0;k<aList.length;k++){
+        //     _aStaticSymbols[aList[k].row][aList[k].col].show(aList[k].value);
+        //     _aMovingColumns[aList[k].col].setVisible(aList[k].row,false);
+        //     _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,false);
+        // }
             
 
         _iCurWinShown++;
@@ -693,14 +674,6 @@ function CGame(oData){
         _iMoney -= _iTotBet;
         _oInterface.refreshMoney(_iMoney);
 
-        var game = [];
-        game.push('exyJkJxvZvNGWd2goDAWJv');
-        betable.wallet(game, function(data){
-            console.log(data);
-        }, function(data){
-            alert("Error: " +data.description);
-        });
-        
         _iCurState = GAME_STATE_SPINNING;
         
         if ( oRetData.res === "true" ){
@@ -784,7 +757,7 @@ function CGame(oData){
                 title: TEXT_CONGRATULATIONS,
                 msg:  TEXT_MSG_SHARE1+ _iMoney + TEXT_MSG_SHARE2,
                 msg_share: TEXT_MSG_SHARING1 + _iMoney + TEXT_MSG_SHARING2
-            });
+        });
     };
     
     this.getState = function(){
@@ -803,35 +776,29 @@ function CGame(oData){
                 }
                 break;
             }
-            case GAME_STATE_SHOW_ALL_WIN:{
-                    
-                    _iTimeElaps += s_iTimeElaps;
-                    if(_iTimeElaps> TIME_SHOW_ALL_WINS){  
-                        this._hideAllWins();
-                    }
-                    break;
+            case GAME_STATE_SHOW_ALL_WIN:{                 
+                _iTimeElaps += s_iTimeElaps;
+                if(_iTimeElaps> TIME_SHOW_ALL_WINS){  
+                    this._hideAllWins();
+                }
+                break;
             }
             case GAME_STATE_SHOW_WIN:{
                 _iTimeElaps += s_iTimeElaps;
                 if(_iTimeElaps > TIME_SHOW_WIN){
                     _iTimeElaps = 0;
-
                     this._showWin();
                 }
                 break;
             }
             case GAME_STATE_BONUS:{
-                    _oBonusPanel.update();
-                    break;
+                _oBonusPanel.update();
+                break;
             }
-        }
-        
-	
+        }	
     };
     
     s_oGame = this;
-    
-    
     
     this._init();
 }
