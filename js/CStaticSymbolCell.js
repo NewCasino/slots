@@ -43,12 +43,14 @@ function CStaticSymbolCell(iRow,iCol,iXPos,iYPos){
     };
     
     this.show = function(iValue){
-        _aSprites[iValue-1].visible = true;
-        _aSprites[iValue-1].gotoAndPlay("anim");
-        _iCurSpriteAnimating = iValue-1;
-        _iLastAnimFrame = _aSprites[iValue-1].spriteSheet.getNumFrames();
-        
-        _oContainer.visible = true;
+        if (_aSprites[iValue-1].visible == false) {
+            _aSprites[iValue-1].visible = true;
+            _aSprites[iValue-1].gotoAndPlay("anim");
+            _iCurSpriteAnimating = iValue-1;
+            _iLastAnimFrame = _aSprites[iValue-1].spriteSheet.getNumFrames();
+            
+            _oContainer.visible = true;
+        };
     };
     
     this._onAnimEnded = function(evt,oData){
@@ -60,8 +62,12 @@ function CStaticSymbolCell(iRow,iCol,iXPos,iYPos){
     };
     
     this.stopAnim = function(){
-       _aSprites[_iCurSpriteAnimating].gotoAndStop("static");
-       _aSprites[_iCurSpriteAnimating].visible = false;
+        if (_iCurSpriteAnimating > -1) {
+            if (_aSprites[_iCurSpriteAnimating].visible == true) {
+               _aSprites[_iCurSpriteAnimating].gotoAndStop("static");
+               _aSprites[_iCurSpriteAnimating].visible = false;
+            };
+        };
     };
     
     this._init(iRow,iCol,iXPos,iYPos);

@@ -362,13 +362,12 @@ function CGame(oData){
             if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
                 _oCurSymbolWinSound.stop();
             }
-            
-            // var aList = _aWinningLine[_iCurWinShown-1].list;
-            // for(var k=0;k<aList.length;k++){
-            //     _aStaticSymbols[aList[k].row][aList[k].col].stopAnim();
-            //     _aMovingColumns[aList[k].col].setVisible(aList[k].row,true);
-            //     _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,true);
-            // }
+            var aList = _aWinningLine[_iCurWinShown-1].list;
+            for(var k=0;k<aList.length;k++){
+                _aStaticSymbols[aList[k].row][aList[k].col].stopAnim();
+                _aMovingColumns[aList[k].col].setVisible(aList[k].row,true);
+                _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,true);
+            }
         }
         
         if(_iCurWinShown === _aWinningLine.length){
@@ -387,14 +386,12 @@ function CGame(oData){
             }
         }
 
-        // var aList = _aWinningLine[_iCurWinShown].list;
-        // for(var k=0;k<aList.length;k++){
-        //     _aStaticSymbols[aList[k].row][aList[k].col].show(aList[k].value);
-        //     _aMovingColumns[aList[k].col].setVisible(aList[k].row,false);
-        //     _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,false);
-        // }
-            
-
+        var aList = _aWinningLine[_iCurWinShown].list;
+        for(var k=0;k<aList.length;k++){
+            _aStaticSymbols[aList[k].row][aList[k].col].show(aList[k].value);
+            _aMovingColumns[aList[k].col].setVisible(aList[k].row,false);
+            _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,false);
+        }
         _iCurWinShown++;
         
     };
@@ -771,12 +768,20 @@ function CGame(oData){
        
         switch(_iCurState){
             case GAME_STATE_SPINNING:{
+                for(var i=0;i<_aWinningLine.length;i++){
+                    var aList = _aWinningLine[i].list;
+                    for(var k=0;k<aList.length;k++){
+                        _aStaticSymbols[aList[k].row][aList[k].col].stopAnim();
+                        _aMovingColumns[aList[k].col].setVisible(aList[k].row,true);
+                        _aMovingColumns[aList[k].col+NUM_REELS].setVisible(aList[k].row,true);
+                    }
+                }
                 for(var i=0;i<_aMovingColumns.length;i++){
                     _aMovingColumns[i].update();
                 }
                 break;
             }
-            case GAME_STATE_SHOW_ALL_WIN:{                 
+            case GAME_STATE_SHOW_ALL_WIN:{             
                 _iTimeElaps += s_iTimeElaps;
                 if(_iTimeElaps> TIME_SHOW_ALL_WINS){  
                     this._hideAllWins();
