@@ -74,16 +74,19 @@ window.Betable = function Betable(clientID, search_options) {
         }
         this._demoWallet = {
             real: {
-                balance: search.init_balance || '1000.00'
+                balance: search.init_balance || '0.00'
               , currency: 'GBP'
               , economy: 'real'
-              , credits: {'exyJkJxvZvNGWd2goDAWJv' : '1000.00'}
+              , credits: {}
             },
             sandbox: {
-                balance: search.init_balance || '1000.00'
+                balance: search.init_balance || '10000.00'
               , currency: 'GBP'
               , economy: 'sandbox'
-              , credits: {'exyJkJxvZvNGWd2goDAWJv' : '1000.00'}
+              , credits: {
+                Q64CcNdTxMqJsF6EApIbKn : '0.00',
+                t4UjEa4vuu_bnSl4zLPldS : '0.00',
+                exyJkJxvZvNGWd2goDAWJv : '0.00'}
             }
         }
         this.manifest = search.manifest

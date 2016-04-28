@@ -15,7 +15,7 @@ function CGame(oData){
     var _iTotWin;
     var _iTotFreeSpin;
     var _iBonus;
-    var _iCurBonusPrizeIndex;
+    var _iCurBonusPrize;
     var _iCurCoinIndex;
     var _iNumSpinCont;
     var _aMovingColumns;
@@ -377,7 +377,7 @@ function CGame(oData){
                 this.onSpin();
                 return;
             }else if(_iBonus === BONUS_WHEEL){
-                _oBonusPanel.show(_iCurBonusPrizeIndex);
+                _oBonusPanel.show(_iCurBonusPrize);
                 _iCurState = GAME_STATE_BONUS;
             }else if(_bAutoSpin){
                 _oInterface.enableAutoSpin();
@@ -686,7 +686,7 @@ function CGame(oData){
                     }else if(parseInt(oRetData.bonus) > 0){
                         _iBonus = BONUS_WHEEL;
                         //_bAutoSpin = false;
-                        _iCurBonusPrizeIndex = oRetData.bonus_prize;
+                        _iCurBonusPrize = oRetData.bonus_prize;
                     }else{
                         _iBonus = 0;
                     }
@@ -729,7 +729,7 @@ function CGame(oData){
     };
     
     this.exitFromBonus = function(){
-        _iMoney = _iMoney + parseFloat(WHEEL_SETTINGS[_iCurBonusPrizeIndex]);
+        _iMoney = _iMoney + parseFloat(_iCurBonusPrize);
         _oInterface.refreshMoney(_iMoney);
         
         if(_bAutoSpin){

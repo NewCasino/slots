@@ -157,20 +157,12 @@ function CMain(oData){
         s_oMsgBox = new CMsgBox();
         _oPreloader.unload();
 
-        
-        WIN_OCCURRENCE = _oData.win_occurrence;
         MIN_REEL_LOOPS = _oData.min_reel_loop;
         REEL_DELAY = _oData.reel_delay;
         TIME_SHOW_WIN = _oData.time_show_win;
         TIME_SHOW_ALL_WINS = _oData.time_show_all_wins;
-        SLOT_CASH = _oData.slot_cash;
         TOTAL_MONEY = parseFloat(_oData.money);
-        FREESPIN_OCCURRENCE = _oData.freespin_occurrence;
-        BONUS_OCCURRENCE = _oData.bonus_occurrence;
-        FREESPIN_SYMBOL_NUM_OCCURR = _oData.freespin_symbol_num_occur;
-        NUM_FREESPIN = _oData.num_freespin;
         BONUS_PRIZE = _oData.bonus_prize;
-        BONUS_PRIZE_OCCURR = _oData.bonus_prize_occur;
         COIN_BET = _oData.coin_bet;
         NUM_SPIN_FOR_ADS = oData.num_spin_ads_showing;
         

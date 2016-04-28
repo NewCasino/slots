@@ -69,6 +69,25 @@ function CWheelBonus(iX, iY,oParentContainer){
             rotateVector2D(iRotation,vVect);           
         }
     };
+
+    this.setTextValue = function(iPrize, iPrizeIndex){
+        var oStartTextPos = {x: -210, y: 3};
+        var vVect = new CVector2(oStartTextPos.x, oStartTextPos.y);
+        var iLocalRot = SEGMENT_ROT;
+        var iRotation =  (Math.PI*SEGMENT_ROT)/180;  
+
+        this.clearText(); 
+        
+        for(var i=0; i<_aPrize.length; i++ ){ 
+            if (i == iPrizeIndex) {
+                _aPrize[i] = iPrize;
+            };
+            _aText[i] = new CFormatText(vVect.getX(), vVect.getY(), TEXT_CURRENCY + _aPrize[i], _oTextContainer);
+            _aText[i].rotateText(-iLocalRot*i);
+            
+            rotateVector2D(iRotation,vVect);           
+        }
+    }
     
     this.clearText = function(){
         for(var i=0; i<_aPrize.length; i++ ){ 

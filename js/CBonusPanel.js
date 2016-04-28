@@ -4,6 +4,7 @@ function CBonusPanel(){
     var _iTimeIdle;
     var _iTimeWin;
     var _iGameState;
+    var _iPrize;
     var _iPrizeToShow;
     var _iCurAlpha;
     var _oWheel;
@@ -54,7 +55,9 @@ function CBonusPanel(){
         _oSpinBut.enable();
         _oTextHighLight.text = "";
         _oTextHighLight.alpha = 1;
-        _iPrizeToShow = iPrize;
+        _iPrize = iPrize;
+        _iPrizeToShow = Math.floor(Math.random() * WHEEL_SETTINGS.length);
+        _oWheel.setTextValue(_iPrize, _iPrizeToShow);
         _oContainer.visible = true;
         _bInitGame = true;
     };
@@ -135,11 +138,11 @@ function CBonusPanel(){
     };
     
     this.wheelArrived = function(){	
-        _oTextHighLight.text = TEXT_CURRENCY + WHEEL_SETTINGS[_iPrizeToShow];
+        _oTextHighLight.text = TEXT_CURRENCY + _iPrize;
         
     	this._animWinText();
             
-        if(WHEEL_SETTINGS[_iPrizeToShow].prize <= 0){
+        if(_iPrize <= 0){
             _iGameState = STATE_BONUS_LOSE;
 
             playSound("game_over_bonus",1,0);
