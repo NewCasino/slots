@@ -60,16 +60,9 @@ function CGame(oData){
         _oFrontSkin = new createjs.Bitmap(s_oSpriteLibrary.getSprite('mask_slot'));
         s_oAttachSection.addChild(_oFrontSkin);
         
-        _oLogo = new createjs.Bitmap(s_oSpriteLibrary.getSprite('logo'));
-        _oLogo.x = 590;
-        _oLogo.y = 0;
-        s_oAttachSection.addChild(_oLogo);
+        _oLogo = true;
         
-        _oLogoFreeSpin = new createjs.Bitmap(s_oSpriteLibrary.getSprite('logo_freespin'));
-        _oLogoFreeSpin.x = 590;
-        _oLogoFreeSpin.y = 0;
-        _oLogoFreeSpin.visible = false;
-        s_oAttachSection.addChild(_oLogoFreeSpin);
+        _oLogoFreeSpin = false;
 
         _oFreeSpinPanel = new createjs.Bitmap(s_oSpriteLibrary.getSprite('freespin_panel'));
         _oFreeSpinPanel.x = 940;
@@ -279,12 +272,12 @@ function CGame(oData){
                 }
             }
             if(_iTotFreeSpin > 0){
-                _oLogo.visible = false;
-                _oLogoFreeSpin.visible = true;
+                _oLogo = false;
+                _oLogoFreeSpin = true;
                 _oFreeSpinPanel.visible = true;
             }else{
-                _oLogo.visible = true;
-                _oLogoFreeSpin.visible = false;
+                _oLogo = true;
+                _oLogoFreeSpin = false;
                 _oFreeSpinPanel.visible = false;
                 _oInterface.refreshFreeSpinNum("");
             }
@@ -303,15 +296,15 @@ function CGame(oData){
             _oInterface.refreshMoney(_iMoney);
         }else{
             if(_iTotFreeSpin > 0){
-                _oLogo.visible = false;
-                _oLogoFreeSpin.visible = true;
+                _oLogo = false;
+                _oLogoFreeSpin = true;
                 _oFreeSpinPanel.visible = true;
                 
                 _oInterface.disableSpin(_bAutoSpin);
                 this.onSpin();
             }else{
-                _oLogo.visible = true;
-                _oLogoFreeSpin.visible = false;
+                _oLogo = true;
+                _oLogoFreeSpin = false;
                 _oFreeSpinPanel.visible = false;
                 _oInterface.refreshFreeSpinNum("");
                 
@@ -605,7 +598,7 @@ function CGame(oData){
         this.removeWinShowing();
         
         if(s_bLogged === true){
-            if(_oLogoFreeSpin.visible){
+            if(_oLogoFreeSpin){
                 _iTotBet = 0;
             }else{
                 _iTotBet = _iCurBet * _iLastLineActive;

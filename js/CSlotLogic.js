@@ -1,8 +1,6 @@
 var s_aSession = new Array();
 
 var _aFinalSymbols = new Array();
-var _aRandSymbols = new Array();
-_aRandSymbols = _initSymbolsOccurence();
 var _betablePaylineCombo = new Array();
 _betablePaylineCombo = _initBetablePaylines();
 var _aPaylineCombo = new Array();
@@ -413,62 +411,6 @@ function _initPaylines(){
     return _aPaylineCombo;
 };
 	
-function _initSymbolsOccurence(){
-    var i;
-
-    //OCCURENCE FOR SYMBOL 1
-    for(i=0;i<1;i++){
-        _aRandSymbols.push(1);
-    }
-
-    //OCCURENCE FOR SYMBOL 2
-    for(i=0;i<2;i++){
-        _aRandSymbols.push(2);
-    }
-
-    //OCCURENCE FOR SYMBOL 3
-    for(i=0;i<3;i++){
-        _aRandSymbols.push(3);
-    }
-
-    //OCCURENCE FOR SYMBOL 4
-    for(i=0;i<4;i++){
-        _aRandSymbols.push(4);
-    }
-
-    //OCCURENCE FOR SYMBOL 5
-    for(i=0;i<5;i++){
-        _aRandSymbols.push(5);
-    }
-
-    //OCCURENCE FOR SYMBOL 6
-    for(i=0;i<6;i++){
-        _aRandSymbols.push(6);
-    }
-
-    //OCCURENCE FOR SYMBOL 7
-    for(i=0;i<7;i++){
-        _aRandSymbols.push(7);
-    }
-
-    //OCCURENCE FOR SYMBOL 8 (WILD)
-    for(i=0;i<1;i++){
-        _aRandSymbols.push(8);
-    }
-
-    //OCCURENCE FOR SYMBOL 9 (BONUS)
-    for(i=0;i<2;i++){
-        _aRandSymbols.push(9);
-    }
-
-     //OCCURENCE FOR SYMBOL 10 (FREESPIN)
-    for(i=0;i<2;i++){
-        _aRandSymbols.push(10);
-    }
-    
-    return _aRandSymbols;
-};
-	
 //THIS FUNCTION INIT WIN FOR EACH SYMBOL COMBO
 //EXAMPLE: _aSymbolWin[0] = array(0,0,20,25,30) MEANS THAT
 //CHERRY SYMBOL GIVES THE FOLLOWING PRIZE FOR:
@@ -490,36 +432,6 @@ function _initSymbolWin(){
     _aSymbolWin[9] = [0,0,0,0,0,50];
 
     return _aSymbolWin;
-};
-    
-	
-function generLosingPattern(){
-    var aFirstCol = new Array();
-    for(var i=0;i<NUM_ROWS;i++){
-        do{
-            var iRandIndex = Math.floor(Math.random()*(_aRandSymbols.length)); 
-        }while(_aRandSymbols[iRandIndex] === 9 || _aRandSymbols[iRandIndex] === 10 || _aRandSymbols[iRandIndex] === 8);
-        
-        var iRandSymbol = _aRandSymbols[iRandIndex];
-        aFirstCol[i] = iRandSymbol;  
-    }
-
-    for(var i=0;i<NUM_ROWS;i++){
-        _aFinalSymbols[i] = new Array();
-        for(var j=0;j<NUM_REELS;j++){
-            if(j == 0){
-                _aFinalSymbols[i][j] = aFirstCol[i];
-            }else{
-                do{
-                    iRandIndex =  Math.floor(Math.random()*_aRandSymbols.length);
-                    iRandSymbol = _aRandSymbols[iRandIndex];
-                }while(aFirstCol[0] === iRandSymbol || aFirstCol[1] === iRandSymbol || aFirstCol[2] === iRandSymbol ||
-                        iRandSymbol === 9 || iRandSymbol === 10 || iRandSymbol === 8);
-
-                _aFinalSymbols[i][j] = iRandSymbol;			
-            }  
-        }
-    }
 };
 
 function shuffle(aArray){

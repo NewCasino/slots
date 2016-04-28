@@ -117,8 +117,6 @@ function CMain(oData){
         s_oSpriteLibrary.addSprite("but_arrow_next","./sprites/but_arrow_next.png");
         s_oSpriteLibrary.addSprite("but_arrow_prev","./sprites/but_arrow_prev.png");
         s_oSpriteLibrary.addSprite("freespin_panel","./sprites/freespin_panel.png");
-        s_oSpriteLibrary.addSprite("logo","./sprites/logo.png");
-        s_oSpriteLibrary.addSprite("logo_freespin","./sprites/logo_freespin.png");
         
         for(var i=1;i<NUM_SYMBOLS+1;i++){
             s_oSpriteLibrary.addSprite("symbol_"+i,"./sprites/symbol_"+i+".png");
