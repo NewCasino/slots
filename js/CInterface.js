@@ -104,7 +104,7 @@ function CInterface(iCurBet,iTotBet,iMoney){
         s_oAttachSection.addChild(_oWinText);
         
         _oFreeSpinNumText = new createjs.Text("","bold 54px "+FONT_GAME, "#ffde00");
-        _oFreeSpinNumText.x = 737;
+        _oFreeSpinNumText.x = 647;
         _oFreeSpinNumText.y = 59;
         _oFreeSpinNumText.textAlign = "center";
         _oFreeSpinNumText.textBaseline = "alphabetic";

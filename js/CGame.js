@@ -65,7 +65,7 @@ function CGame(oData){
         _oLogoFreeSpin = false;
 
         _oFreeSpinPanel = new createjs.Bitmap(s_oSpriteLibrary.getSprite('freespin_panel'));
-        _oFreeSpinPanel.x = 940;
+        _oFreeSpinPanel.x = 640;
         _oFreeSpinPanel.y = 3;
         _oFreeSpinPanel.visible = false;
         s_oAttachSection.addChild(_oFreeSpinPanel);
@@ -75,7 +75,7 @@ function CGame(oData){
         _oPayTable = new CPayTablePanel();
 		
         if(_iMoney < _iTotBet){
-                _oInterface.disableSpin(_bAutoSpin);
+            _oInterface.disableSpin(_bAutoSpin);
         }
         
         //FIND MIN WIN
@@ -598,11 +598,7 @@ function CGame(oData){
         this.removeWinShowing();
         
         if(s_bLogged === true){
-            if(_oLogoFreeSpin){
-                _iTotBet = 0;
-            }else{
-                _iTotBet = _iCurBet * _iLastLineActive;
-            }
+            _iTotBet = _iCurBet * _iLastLineActive;
             _onCallSpin(_iCurBet,_iTotBet,_iLastLineActive);
         }else{
             this.generateLosingPattern();
@@ -661,7 +657,10 @@ function CGame(oData){
     };
     
     this.onSpinReceived = function(oRetData){
-        _iMoney -= _iTotBet;
+        if(!_oLogoFreeSpin){
+            _iMoney -= _iTotBet;
+        }
+
         _oInterface.refreshMoney(_iMoney);
 
         _iCurState = GAME_STATE_SPINNING;
@@ -698,7 +697,7 @@ function CGame(oData){
                 }
 
                 _iMoney = parseFloat(oRetData.money);
-                
+                _oInterface.refreshMoney(_iMoney);
         }else{
                 s_oGame.generateLosingPattern();
         }
