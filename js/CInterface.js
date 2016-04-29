@@ -3,8 +3,8 @@ function CInterface(iCurBet,iTotBet,iMoney){
     var _oSpinBut;
     var _oAutoSpinBut;
     var _oInfoBut;
-    var _oAddLineBut;
-    var _oAddLineButMinus;
+    // var _oAddLineBut;
+    // var _oAddLineButMinus;
     var _oAudioToggle;
     var _oBetCoinBut;
     var _oBetCoinButMinus;
@@ -33,13 +33,13 @@ function CInterface(iCurBet,iTotBet,iMoney){
             _oAudioToggle.addEventListener(ON_MOUSE_UP, this._onAudioToggle, this);
         }
 
-        oSprite = s_oSpriteLibrary.getSprite('plus_bg');
-        _oAddLineBut = new CTextButton(960 + (oSprite.width/2),310 ,oSprite,TEXT,FONT_GAME,"#ffffff",22);  
-        _oAddLineBut.addEventListener(ON_MOUSE_UP, this._onAddLine, this);
+        // oSprite = s_oSpriteLibrary.getSprite('plus_bg');
+        // _oAddLineBut = new CTextButton(960 + (oSprite.width/2),310 ,oSprite,TEXT,FONT_GAME,"#ffffff",22);  
+        // _oAddLineBut.addEventListener(ON_MOUSE_UP, this._onAddLine, this);
 
-        oSprite = s_oSpriteLibrary.getSprite('minus_bg');
-        _oAddLineButMinus = new CTextButton(100 + (oSprite.width/2),310 ,oSprite,TEXT,FONT_GAME,"#ffffff",22);  
-        _oAddLineButMinus.addEventListener(ON_MOUSE_UP, this._onAddLineMinus, this);
+        // oSprite = s_oSpriteLibrary.getSprite('minus_bg');
+        // _oAddLineButMinus = new CTextButton(100 + (oSprite.width/2),310 ,oSprite,TEXT,FONT_GAME,"#ffffff",22);  
+        // _oAddLineButMinus.addEventListener(ON_MOUSE_UP, this._onAddLineMinus, this);
         
         oSprite = s_oSpriteLibrary.getSprite('but_autospin');
         _oAutoSpinBut = new CTextButton(790 + (oSprite.width/2),595 ,oSprite,TEXT_AUTOSPIN,FONT_GAME,"#ffffff",22);  
@@ -71,7 +71,7 @@ function CInterface(iCurBet,iTotBet,iMoney){
         _oMoneyText.textAlign = "center";
         s_oAttachSection.addChild(_oMoneyText);
         
-        _oNumLinesText = new createjs.Text("/"+NUM_PAYLINES ,"bold 30px "+FONT_GAME, "#ffffff");
+        _oNumLinesText = new createjs.Text("" ,"bold 30px "+FONT_GAME, "#ffffff");
         _oNumLinesText.x =  630;
         _oNumLinesText.y = CANVAS_HEIGHT - 25;
         _oNumLinesText.textAlign = "center";
@@ -87,8 +87,15 @@ function CInterface(iCurBet,iTotBet,iMoney){
         _oCoinText.shadow = new createjs.Shadow("#000000", 1, 1, 2);
         s_oAttachSection.addChild(_oCoinText);
 
-        _oTotalBetText = new createjs.Text("BET" +": "+iTotBet.toFixed(2),"bold 30px "+FONT_GAME, "#ffffff");
-        _oTotalBetText.x = 540;
+        var iTotBetFixed;
+        if (iTotBet < 1) {
+            iTotBetFixed = iTotBet.toFixed(2);
+        }else{
+            iTotBetFixed = iTotBet.toFixed(0);
+        }
+
+        _oTotalBetText = new createjs.Text(""+iTotBetFixed,"bold 30px "+FONT_GAME, "#ffffff");
+        _oTotalBetText.x = 580;
         _oTotalBetText.y = CANVAS_HEIGHT - 25;
         _oTotalBetText.textAlign = "center";
         _oTotalBetText.textBaseline = "alphabetic";
@@ -122,10 +129,10 @@ function CInterface(iCurBet,iTotBet,iMoney){
         _oAutoSpinBut = null;
         _oInfoBut.unload();
         _oInfoBut = null;
-        _oAddLineBut.unload();
-        _oAddLineBut = null;
-        _oAddLineButMinus.unload();
-        _oAddLineButMinus = null;
+        // _oAddLineBut.unload();
+        // _oAddLineBut = null;
+        // _oAddLineButMinus.unload();
+        // _oAddLineButMinus = null;
         _oBetCoinBut.unload();
         _oBetCoinBut = null;
         _oBetCoinButMinus.unload();
@@ -157,11 +164,18 @@ function CInterface(iCurBet,iTotBet,iMoney){
     };
     
     this.refreshTotalBet = function(iTotBet){
-        _oTotalBetText.text = "BET" +": "+iTotBet.toFixed(2);
+        var iTotBetFixed;
+        if (iTotBet < 1) {
+            iTotBetFixed = iTotBet.toFixed(2);
+        }else{
+            iTotBetFixed = iTotBet.toFixed(0);
+        }
+        
+        _oTotalBetText.text = "" +iTotBetFixed;
     };
     
     this.refreshNumLines = function(iLines){
-        _oNumLinesText.text = "/"+iLines;
+        _oNumLinesText.text = "";
     };
     
     this.resetWin = function(){
@@ -194,9 +208,9 @@ function CInterface(iCurBet,iTotBet,iMoney){
         _oAutoSpinBut.enable();
         _oMaxBetBut.enable();
         _oBetCoinBut.enable();
-        _oAddLineBut.enable();
+        //_oAddLineBut.enable();
         _oBetCoinButMinus.enable();
-        _oAddLineButMinus.enable();
+        //_oAddLineButMinus.enable();
         _oInfoBut.enable();
     };
 	
@@ -235,9 +249,9 @@ function CInterface(iCurBet,iTotBet,iMoney){
         
         _oMaxBetBut.disable();
         _oBetCoinBut.disable();
-        _oAddLineBut.disable();
+        //_oAddLineBut.disable();
         _oBetCoinButMinus.disable();
-        _oAddLineButMinus.disable();
+        //_oAddLineButMinus.disable();
         _oInfoBut.disable();
     };
     

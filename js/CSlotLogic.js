@@ -318,6 +318,7 @@ function _onCallSpin(iCoin, iCurBet, iNumBettingLines){
                         ,currency: 'GBP'
                         ,economy: economy
                     }, function success(data){
+                        console.log(data);
                         iPrizeReceived = parseFloat(data.payout).toFixed(2);
                         s_aSession["bBonus"] = 1;
                         var walletResults;

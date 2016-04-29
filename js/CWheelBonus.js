@@ -17,7 +17,7 @@ function CWheelBonus(iX, iY,oParentContainer){
         
         _aPrize = new Array();
         for(var i=0; i<WHEEL_SETTINGS.length; i++){
-            _aPrize[i] = WHEEL_SETTINGS[i];
+            _aPrize[i] = parseFloat(WHEEL_SETTINGS[i]).toFixed(0).toString();
         }
 
         this._initColors();
@@ -80,6 +80,12 @@ function CWheelBonus(iX, iY,oParentContainer){
         
         for(var i=0; i<_aPrize.length; i++ ){ 
             if (i == iPrizeIndex) {
+                if(parseFloat(iPrize) % 1 != 0){
+                    
+                }
+                else{
+                    iPrize = parseFloat(iPrize).toFixed(0);
+                }
                 _aPrize[i] = iPrize;
             };
             _aText[i] = new CFormatText(vVect.getX(), vVect.getY(), TEXT_CURRENCY + _aPrize[i], _oTextContainer);

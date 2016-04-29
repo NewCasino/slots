@@ -721,7 +721,6 @@ function CGame(oData){
     };
     
     this.exitFromBonus = function(){
-        _iMoney = _iMoney + parseFloat(_iCurBonusPrize);
         _oInterface.refreshMoney(_iMoney);
         
         if(_bAutoSpin){
